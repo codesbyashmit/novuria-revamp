@@ -91,9 +91,9 @@ export default async function AdminDashboardPage() {
                   {recentOrders.map((order) => (
                     <tr key={order.id} className="text-[#F5EFE6]">
                       <td className="py-3 font-mono text-[#E5B869]">{order.orderNumber}</td>
-                      <td className="py-3">{order.customerName}</td>
+                      <td className="py-3">{order.guestEmail || order.guestPhone || 'Atelier Patron'}</td>
                       <td className="py-3">
-                        <AtelierPrice amountInPaise={order.totalPaise} size="sm" />
+                        <AtelierPrice amountInPaise={order.totalAmountPaise} size="sm" />
                       </td>
                       <td className="py-3">
                         <span className="px-2 py-0.5 uppercase tracking-wider text-[10px] bg-[#2C1810] text-[#E5B869]">

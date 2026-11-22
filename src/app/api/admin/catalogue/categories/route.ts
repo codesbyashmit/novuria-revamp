@@ -10,11 +10,9 @@ const categorySchema = z.object({
   name: z.string().min(1),
   slug: z.string().min(1),
   description: z.string().optional(),
-  parentId: z.string().uuid().optional().nullable(),
   imageUrl: z.string().url().optional().nullable(),
   displayOrder: z.number().int().default(0),
   isNav: z.boolean().default(true),
-  isActive: z.boolean().default(true),
 });
 
 export async function GET() {
@@ -61,11 +59,9 @@ export async function POST(request: NextRequest) {
           name: d.name,
           slug: d.slug,
           description: d.description || null,
-          parentId: d.parentId || null,
           imageUrl: d.imageUrl || null,
           displayOrder: d.displayOrder,
           isNav: d.isNav,
-          isActive: d.isActive,
         })
         .where(eq(schema.categories.id, d.id))
         .returning();
@@ -78,11 +74,9 @@ export async function POST(request: NextRequest) {
         name: d.name,
         slug: d.slug,
         description: d.description || null,
-        parentId: d.parentId || null,
         imageUrl: d.imageUrl || null,
         displayOrder: d.displayOrder,
         isNav: d.isNav,
-        isActive: d.isActive,
       })
       .returning();
 

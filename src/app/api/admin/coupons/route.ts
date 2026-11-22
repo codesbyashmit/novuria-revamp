@@ -64,13 +64,12 @@ export async function POST(request: NextRequest) {
           description: c.description || null,
           discountType: c.discountType,
           discountValue: c.discountValue,
-          minOrderPaise: c.minOrderPaise,
+          minSpendPaise: c.minOrderPaise,
           maxDiscountPaise: c.maxDiscountPaise || null,
-          usageLimit: c.usageLimit || null,
-          validFrom: c.validFrom ? new Date(c.validFrom) : null,
-          validUntil: c.validUntil ? new Date(c.validUntil) : null,
+          totalUsageLimit: c.usageLimit || null,
+          validFrom: c.validFrom ? new Date(c.validFrom) : new Date(),
+          validUntil: c.validUntil ? new Date(c.validUntil) : new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
           isActive: c.isActive,
-          updatedAt: new Date(),
         })
         .where(eq(schema.coupons.id, c.id))
         .returning();
@@ -85,11 +84,11 @@ export async function POST(request: NextRequest) {
         description: c.description || null,
         discountType: c.discountType,
         discountValue: c.discountValue,
-        minOrderPaise: c.minOrderPaise,
+        minSpendPaise: c.minOrderPaise,
         maxDiscountPaise: c.maxDiscountPaise || null,
-        usageLimit: c.usageLimit || null,
-        validFrom: c.validFrom ? new Date(c.validFrom) : null,
-        validUntil: c.validUntil ? new Date(c.validUntil) : null,
+        totalUsageLimit: c.usageLimit || null,
+        validFrom: c.validFrom ? new Date(c.validFrom) : new Date(),
+        validUntil: c.validUntil ? new Date(c.validUntil) : new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
         isActive: c.isActive,
       })
       .returning();

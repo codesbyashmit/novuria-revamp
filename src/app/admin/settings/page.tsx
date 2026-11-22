@@ -31,7 +31,22 @@ export default function AdminSettingsPage() {
   }
 
   useEffect(() => {
-    fetchSettings();
+    let ignore = false;
+    fetch('/api/admin/settings')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (!ignore && data) {
+          setSettings(data.settings || []);
+        }
+      })
+      .finally(() => {
+        if (!ignore) {
+          setLoading(false);
+        }
+      });
+    return () => {
+      ignore = true;
+    };
   }, []);
 
   function handleChange(key: string, value: string) {

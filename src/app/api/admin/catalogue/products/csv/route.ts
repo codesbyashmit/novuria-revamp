@@ -6,6 +6,7 @@ import { generateCsv, parseCsv } from '@/lib/csv';
 import { eq } from 'drizzle-orm';
 
 interface ProductCsvRow {
+  [key: string]: string;
   name: string;
   slug: string;
   description: string;

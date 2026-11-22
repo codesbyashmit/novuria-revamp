@@ -77,7 +77,7 @@ export default function AdminLoginPage() {
           />
 
           <div className="pt-2">
-            <AtelierButton variant="primary" size="lg" fullWidth disabled={loading}>
+            <AtelierButton variant="primary" size="lg" className="w-full" disabled={loading}>
               {loading ? 'Authenticating...' : 'Enter Atelier Console'}
             </AtelierButton>
           </div>
