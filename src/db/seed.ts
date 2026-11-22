@@ -9,15 +9,14 @@ import * as schema from './schema';
 async function seed() {
   const connectionString = process.env.DATABASE_URL;
   if (!connectionString) {
-    console.error('❌ Error: DATABASE_URL is not set in .env.local or environment.');
+    console.error('Error: DATABASE_URL is not set in .env.local or environment.');
     process.exit(1);
   }
 
-  console.log('🌱 Starting database seeding with sample e-commerce data...');
+  console.log('Starting database seeding with sample e-commerce data...');
   const sql = neon(connectionString);
   const db = drizzle(sql, { schema });
 
-  // 1. Seed categories
   console.log('Seeding categories...');
   const insertedCategories = await db
     .insert(schema.categories)
@@ -41,9 +40,8 @@ async function seed() {
     .onConflictDoNothing()
     .returning();
 
-  console.log(`✓ Inserted ${insertedCategories.length} categories`);
+  console.log(`Inserted ${insertedCategories.length} categories`);
 
-  // 2. Seed sample products if category exists
   if (insertedCategories.length > 0) {
     const electronicsId = insertedCategories.find((c) => c.slug === 'electronics-audio')?.id;
     const apparelId = insertedCategories.find((c) => c.slug === 'apparel-streetwear')?.id;
@@ -92,13 +90,13 @@ async function seed() {
       .onConflictDoNothing()
       .returning();
 
-    console.log(`✓ Inserted ${insertedProducts.length} products`);
+    console.log(`Inserted ${insertedProducts.length} products`);
   }
 
-  console.log('✅ Seeding completed successfully!');
+  console.log('Seeding completed successfully.');
 }
 
 seed().catch((err) => {
-  console.error('❌ Seeding failed:', err);
+  console.error('Seeding failed:', err);
   process.exit(1);
 });
