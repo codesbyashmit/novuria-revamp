@@ -1,20 +1,180 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0c0a09;
-  --foreground: #f5f5f4;
+  --color-surface: #fff7fa;
+  --color-surface-dim: #e9d3e8;
+  --color-surface-bright: #fff7fa;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #ffeffc;
+  --color-surface-container: #fee7fc;
+  --color-surface-container-high: #f8e1f6;
+  --color-surface-container-highest: #f2dcf1;
+  --color-surface-variant: #f2dcf1;
+  --color-on-surface: #241726;
+  --color-on-surface-variant: #514534;
+  --color-inverse-surface: #1a0e1c;
+  --color-inverse-on-surface: #ffebfd;
+  --color-outline: #837562;
+  --color-outline-variant: #d6c4ad;
+  --color-primary: #7f5600;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #e6a117;
+  --color-on-primary-container: #5a3c00;
+  --color-secondary: #1c6960;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #a5ede1;
+  --color-on-secondary-container: #226e65;
+  --color-tertiary: #b81f09;
+  --color-on-tertiary: #ffffff;
+  --color-tertiary-container: #ff8f7a;
+  --color-on-tertiary-container: #860d00;
+  --color-ground: #ede8ee;
+  --color-ink: #1a0e1c;
+  --color-saffron: #e6a117;
+  --color-verdigris: #1e6b62;
+  --color-vermilion: #d8371f;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans), sans-serif;
-  --font-mono: var(--font-geist-mono), monospace;
-  --font-serif: var(--font-cormorant), Georgia, serif;
+* {
+  border-radius: 0 !important;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans);
+  background-color: var(--color-surface);
+  color: var(--color-on-surface);
+  font-family: var(--font-hanken), sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.clip-swatch {
+  clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%);
+}
+
+.clip-swatch-sm {
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+}
+
+.clip-swatch-lg {
+  clip-path: polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 100%, 0 100%);
+}
+
+.shadow-atelier {
+  box-shadow: 4px 4px 0px 0px #1a0e1c;
+}
+
+.shadow-atelier-sm {
+  box-shadow: 2px 2px 0px 0px #1a0e1c;
+}
+
+.shadow-atelier-lg {
+  box-shadow: 6px 6px 0px 0px #1a0e1c;
+}
+
+.shadow-atelier-saffron {
+  box-shadow: 3px 3px 0px 0px #e6a117;
+}
+
+.punched-hole {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50% !important;
+  background-color: var(--color-surface);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4);
+  z-index: 10;
+}
+
+.punched-hole-dark {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50% !important;
+  background-color: #1a0e1c;
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.2);
+  z-index: 10;
+}
+
+.font-display-hero {
+  font-family: var(--font-bodoni), serif;
+  font-size: 72px;
+  font-weight: 700;
+  line-height: 76px;
+  letter-spacing: -0.02em;
+}
+
+.font-headline-lg {
+  font-family: var(--font-bodoni), serif;
+  font-size: 48px;
+  font-weight: 600;
+  line-height: 52px;
+  letter-spacing: -0.01em;
+}
+
+.font-headline-md {
+  font-family: var(--font-bodoni), serif;
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 34px;
+  letter-spacing: 0em;
+}
+
+.font-title-editorial {
+  font-family: var(--font-bodoni), serif;
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 28px;
+  letter-spacing: 0.02em;
+}
+
+.font-body-lg {
+  font-family: var(--font-hanken), sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 28px;
+  letter-spacing: -0.01em;
+}
+
+.font-body-md {
+  font-family: var(--font-hanken), sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0em;
+}
+
+.font-body-sm {
+  font-family: var(--font-hanken), sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0.01em;
+}
+
+.font-label-code {
+  font-family: var(--font-space-mono), monospace;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 16px;
+  letter-spacing: 0.12em;
+}
+
+.font-price-lg {
+  font-family: var(--font-space-mono), monospace;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 24px;
+  letter-spacing: 0.02em;
+}
+
+.font-price-md {
+  font-family: var(--font-space-mono), monospace;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 20px;
+  letter-spacing: 0.02em;
 }
