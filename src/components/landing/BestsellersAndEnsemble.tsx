@@ -32,14 +32,7 @@ export default function BestsellersAndEnsemble({
 
   const handleBuyBundle = () => {
     if (!bundle) return;
-    addItem({
-      id: bundle.id,
-      name: bundle.name,
-      slug: bundle.slug,
-      price: bundle.totalPrice,
-      images: [bundle.imageUrl],
-      color: '3-Piece Set',
-    });
+    addItem(bundle.id);
   };
 
   return (

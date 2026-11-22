@@ -56,7 +56,7 @@ export default function ProductCard({ product }: { product: ProductData }) {
 
         <button
           type="button"
-          onClick={() => addItem(product)}
+          onClick={() => addItem(product.id)}
           className="absolute bottom-3 left-3 right-3 flex items-center justify-center gap-2 bg-stone-950/90 hover:bg-amber-600 text-stone-200 hover:text-stone-950 border border-stone-700 py-2.5 text-xs uppercase tracking-widest transition opacity-0 group-hover:opacity-100 backdrop-blur-sm"
         >
           <ShoppingBag className="h-3.5 w-3.5" />

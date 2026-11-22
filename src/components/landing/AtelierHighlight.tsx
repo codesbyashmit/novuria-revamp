@@ -127,7 +127,7 @@ export default function AtelierHighlight({
 
                   <button
                     type="button"
-                    onClick={() => addItem(featuredProduct)}
+                    onClick={() => addItem(featuredProduct.id)}
                     className="mt-2 w-full flex items-center justify-center gap-2 bg-amber-600 hover:bg-amber-500 text-stone-950 font-semibold py-2.5 text-xs uppercase tracking-widest transition"
                   >
                     <ShoppingBag className="h-3.5 w-3.5" />
