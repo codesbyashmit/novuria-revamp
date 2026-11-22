@@ -13,9 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Novuria — Modern E-Commerce Platform',
-  description:
-    'High-performance full-stack e-commerce experience powered by Next.js, TypeScript, Neon Serverless Postgres, and Drizzle ORM.',
+  title: 'Novuria',
+  description: 'Novuria E-Commerce',
 };
 
 export default function RootLayout({
@@ -28,9 +27,7 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-zinc-950 text-zinc-100 selection:bg-indigo-500 selection:text-white">
-        {children}
-      </body>
+      <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
 }
