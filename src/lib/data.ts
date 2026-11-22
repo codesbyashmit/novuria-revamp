@@ -1,6 +1,6 @@
 import { db } from '@/db';
 import * as schema from '@/db/schema';
-import { desc, eq } from 'drizzle-orm';
+import { and, desc, eq } from 'drizzle-orm';
 
 export async function getNavCategories() {
   if (!db) return [];
@@ -19,12 +19,29 @@ export async function getCollections() {
     .orderBy(schema.collections.displayOrder);
 }
 
-export async function getPromotions() {
+export async function getHeroSlides() {
   if (!db) return [];
   return db
     .select()
-    .from(schema.promotions)
-    .where(eq(schema.promotions.isActive, true));
+    .from(schema.heroSlides)
+    .where(eq(schema.heroSlides.isActive, true))
+    .orderBy(schema.heroSlides.displayOrder);
+}
+
+export async function getAdSlots(slotKey?: string) {
+  if (!db) return [];
+  if (slotKey) {
+    return db
+      .select()
+      .from(schema.adSlots)
+      .where(and(eq(schema.adSlots.slotKey, slotKey), eq(schema.adSlots.isActive, true)))
+      .orderBy(desc(schema.adSlots.priority));
+  }
+  return db
+    .select()
+    .from(schema.adSlots)
+    .where(eq(schema.adSlots.isActive, true))
+    .orderBy(desc(schema.adSlots.priority));
 }
 
 export async function getNewArrivals() {
@@ -32,23 +49,23 @@ export async function getNewArrivals() {
   return db
     .select()
     .from(schema.products)
-    .where(eq(schema.products.isNewArrival, true))
+    .where(and(eq(schema.products.isNewArrival, true), eq(schema.products.isActive, true)))
     .orderBy(desc(schema.products.createdAt));
 }
 
-export async function getOccasionProducts(occasion?: string) {
+export async function getOccasionProducts(occasionId?: string) {
   if (!db) return [];
-  if (occasion) {
+  if (occasionId) {
     return db
       .select()
       .from(schema.products)
-      .where(eq(schema.products.occasion, occasion))
+      .where(and(eq(schema.products.occasionId, occasionId), eq(schema.products.isActive, true)))
       .orderBy(desc(schema.products.createdAt));
   }
   return db
     .select()
     .from(schema.products)
-    .where(eq(schema.products.isFeatured, true))
+    .where(and(eq(schema.products.isFeatured, true), eq(schema.products.isActive, true)))
     .orderBy(desc(schema.products.createdAt));
 }
 
@@ -57,21 +74,56 @@ export async function getBestsellers() {
   return db
     .select()
     .from(schema.products)
-    .where(eq(schema.products.isBestseller, true))
+    .where(and(eq(schema.products.isBestseller, true), eq(schema.products.isActive, true)))
     .orderBy(desc(schema.products.createdAt));
 }
 
-export async function getFeaturedBundle() {
-  if (!db) return null;
-  const result = await db.select().from(schema.bundles).limit(1);
-  return result[0] || null;
-}
-
-export async function getLookbookStories() {
+export async function getHomepageModules() {
   if (!db) return [];
   return db
     .select()
-    .from(schema.lookbookStories)
-    .orderBy(schema.lookbookStories.displayOrder);
+    .from(schema.homepageModules)
+    .where(eq(schema.homepageModules.isEnabled, true))
+    .orderBy(schema.homepageModules.displayOrder);
 }
 
+export async function getTrustBadges() {
+  if (!db) return [];
+  return db
+    .select()
+    .from(schema.trustBadges)
+    .where(eq(schema.trustBadges.isActive, true))
+    .orderBy(schema.trustBadges.displayOrder);
+}
+
+export async function getAnnouncementMessages() {
+  if (!db) return [];
+  return db
+    .select()
+    .from(schema.announcementBarMessages)
+    .where(eq(schema.announcementBarMessages.isActive, true))
+    .orderBy(schema.announcementBarMessages.displayOrder);
+}
+
+export async function getApprovedReviews() {
+  if (!db) return [];
+  return db
+    .select()
+    .from(schema.reviews)
+    .where(eq(schema.reviews.moderationStatus, 'approved'))
+    .orderBy(desc(schema.reviews.rating));
+}
+
+export async function getFooterLinks() {
+  if (!db) return [];
+  return db
+    .select()
+    .from(schema.footerLinks)
+    .where(eq(schema.footerLinks.isActive, true))
+    .orderBy(schema.footerLinks.displayOrder);
+}
+
+export async function getSiteSettings() {
+  if (!db) return [];
+  return db.select().from(schema.siteSettings);
+}

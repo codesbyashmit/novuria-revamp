@@ -9,13 +9,13 @@ export async function GET(request: NextRequest) {
   }
 
   const { searchParams } = new URL(request.url);
-  const occasion = searchParams.get('occasion');
+  const occasionId = searchParams.get('occasionId');
   const type = searchParams.get('type');
 
   let conditions = eq(schema.products.isActive, true);
 
-  if (occasion) {
-    conditions = and(conditions, eq(schema.products.occasion, occasion))!;
+  if (occasionId) {
+    conditions = and(conditions, eq(schema.products.occasionId, occasionId))!;
   }
 
   if (type === 'new_arrivals') {
@@ -32,4 +32,3 @@ export async function GET(request: NextRequest) {
 
   return NextResponse.json({ products: productsList });
 }
-
