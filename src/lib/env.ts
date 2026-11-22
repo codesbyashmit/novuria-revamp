@@ -13,7 +13,7 @@ const parsed = envSchema.safeParse({
 });
 
 if (!parsed.success) {
-  console.warn('⚠️ Environment validation warnings:', parsed.error.format());
+  console.warn('Environment validation warnings:', parsed.error.format());
 }
 
 export const env = parsed.success
