@@ -26,7 +26,8 @@ export async function POST(request: NextRequest) {
       .onConflictDoNothing();
 
     return NextResponse.json({ success: true, message: 'Welcome to the Novuria Guild' });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to subscribe' }, { status: 500 });
   }
 }
+
