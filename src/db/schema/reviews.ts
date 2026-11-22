@@ -37,3 +37,4 @@ export const productQuestions = pgTable('product_questions', {
 });
 
 export type Review = typeof reviews.$inferSelect;
+

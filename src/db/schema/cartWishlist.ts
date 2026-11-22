@@ -51,3 +51,4 @@ export const recentlyViewed = pgTable('recently_viewed', {
 export type Cart = typeof carts.$inferSelect;
 export type CartItem = typeof cartItems.$inferSelect;
 export type WishlistItem = typeof wishlistItems.$inferSelect;
+

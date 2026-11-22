@@ -56,3 +56,4 @@ export type User = typeof users.$inferSelect;
 export type NewUser = typeof users.$inferInsert;
 export type Session = typeof sessions.$inferSelect;
 export type Address = typeof addresses.$inferSelect;
+

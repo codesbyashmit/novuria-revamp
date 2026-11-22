@@ -30,3 +30,4 @@ export const offerRedemptions = pgTable('offer_redemptions', {
 
 export type Coupon = typeof coupons.$inferSelect;
 export type OfferRedemption = typeof offerRedemptions.$inferSelect;
+

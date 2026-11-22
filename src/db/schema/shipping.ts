@@ -26,3 +26,4 @@ export const shippingMethods = pgTable('shipping_methods', {
 });
 
 export type PincodeServiceability = typeof pincodeServiceability.$inferSelect;
+

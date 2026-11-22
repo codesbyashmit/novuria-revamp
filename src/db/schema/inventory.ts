@@ -23,3 +23,4 @@ export const inventoryAuditLogs = pgTable('inventory_audit_logs', {
 
 export type Inventory = typeof inventory.$inferSelect;
 export type InventoryAuditLog = typeof inventoryAuditLogs.$inferSelect;
+

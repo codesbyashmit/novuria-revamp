@@ -16,3 +16,4 @@ export const restockNotifications = pgTable('restock_notifications', {
   isNotified: boolean('is_notified').default(false).notNull(),
   createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
 });
+
