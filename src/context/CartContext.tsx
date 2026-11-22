@@ -4,122 +4,116 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 
 export interface CartItem {
   id: string;
+  variantId: string;
+  productId: string;
   name: string;
   slug: string;
-  price: number;
-  image: string;
+  sku: string;
+  color?: string | null;
+  colorHex?: string | null;
+  size?: string | null;
+  pricePaise: number;
+  compareAtPricePaise?: number | null;
   quantity: number;
-  color?: string;
-  size?: string;
+  lineTotalPaise: number;
+  imageUrl?: string | null;
 }
 
 interface CartContextType {
   items: CartItem[];
-  addItem: (product: {
-    id: string;
-    name: string;
-    slug: string;
-    price: number | string;
-    images?: string[] | null;
-    color?: string | null;
-  }) => void;
-  removeItem: (id: string) => void;
-  updateQuantity: (id: string, quantity: number) => void;
-  clearCart: () => void;
+  subtotalPaise: number;
   totalCount: number;
-  subtotal: number;
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
+  addItem: (variantId: string, quantity?: number) => Promise<void>;
+  updateQuantity: (cartItemId: string, quantity: number) => Promise<void>;
+  removeItem: (cartItemId: string) => Promise<void>;
+  refreshCart: () => Promise<void>;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  const [items, setItems] = useState<CartItem[]>(() => {
-    if (typeof window === 'undefined') return [];
-    try {
-      const stored = localStorage.getItem('novuria_cart');
-      return stored ? JSON.parse(stored) : [];
-    } catch {
-      return [];
-    }
-  });
-
+  const [items, setItems] = useState<CartItem[]>([]);
+  const [subtotalPaise, setSubtotalPaise] = useState(0);
+  const [totalCount, setTotalCount] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
 
-  useEffect(() => {
+  const refreshCart = async () => {
     try {
-      localStorage.setItem('novuria_cart', JSON.stringify(items));
-    } catch {}
-  }, [items]);
-
-  const addItem = (product: {
-    id: string;
-    name: string;
-    slug: string;
-    price: number | string;
-    images?: string[] | null;
-    color?: string | null;
-  }) => {
-    const numericPrice = typeof product.price === 'string' ? parseFloat(product.price) : product.price;
-    const defaultImage = product.images && product.images.length > 0 ? product.images[0] : '';
-
-    setItems((prev) => {
-      const existing = prev.find((item) => item.id === product.id);
-      if (existing) {
-        return prev.map((item) =>
-          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
-        );
+      const res = await fetch('/api/cart');
+      if (res.ok) {
+        const data = await res.json();
+        setItems(data.items || []);
+        setSubtotalPaise(data.subtotalPaise || 0);
+        setTotalCount(data.totalItems || 0);
       }
-      return [
-        ...prev,
-        {
-          id: product.id,
-          name: product.name,
-          slug: product.slug,
-          price: numericPrice,
-          image: defaultImage,
-          quantity: 1,
-          color: product.color || undefined,
-        },
-      ];
-    });
-    setIsOpen(true);
+    } catch {}
   };
 
-  const removeItem = (id: string) => {
-    setItems((prev) => prev.filter((item) => item.id !== id));
+  useEffect(() => {
+    fetch('/api/cart')
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data) {
+          setItems(data.items || []);
+          setSubtotalPaise(data.subtotalPaise || 0);
+          setTotalCount(data.totalItems || 0);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  const addItem = async (variantId: string, quantity = 1) => {
+    try {
+      const res = await fetch('/api/cart', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ variantId, quantity }),
+      });
+      if (res.ok) {
+        await refreshCart();
+        setIsOpen(true);
+      }
+    } catch {}
   };
 
-  const updateQuantity = (id: string, quantity: number) => {
-    if (quantity <= 0) {
-      removeItem(id);
-      return;
-    }
-    setItems((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, quantity } : item))
-    );
+  const updateQuantity = async (cartItemId: string, quantity: number) => {
+    try {
+      const res = await fetch('/api/cart', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ cartItemId, quantity }),
+      });
+      if (res.ok) {
+        await refreshCart();
+      }
+    } catch {}
   };
 
-  const clearCart = () => {
-    setItems([]);
+  const removeItem = async (cartItemId: string) => {
+    try {
+      const res = await fetch(`/api/cart?id=${cartItemId}`, {
+        method: 'DELETE',
+      });
+      if (res.ok) {
+        await refreshCart();
+      }
+    } catch {}
   };
-
-  const totalCount = items.reduce((sum, item) => sum + item.quantity, 0);
-  const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
     <CartContext.Provider
       value={{
         items,
-        addItem,
-        removeItem,
-        updateQuantity,
-        clearCart,
+        subtotalPaise,
         totalCount,
-        subtotal,
         isOpen,
         setIsOpen,
+        addItem,
+        updateQuantity,
+        removeItem,
+        refreshCart,
       }}
     >
       {children}

@@ -1,5 +1,44 @@
 @import "tailwindcss";
 
+@theme {
+  --color-surface: #fff7fa;
+  --color-surface-dim: #e9d3e8;
+  --color-surface-bright: #fff7fa;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #ffeffc;
+  --color-surface-container: #fee7fc;
+  --color-surface-container-high: #f8e1f6;
+  --color-surface-container-highest: #f2dcf1;
+  --color-surface-variant: #f2dcf1;
+  --color-on-surface: #241726;
+  --color-on-surface-variant: #514534;
+  --color-inverse-surface: #1a0e1c;
+  --color-inverse-on-surface: #ffebfd;
+  --color-outline: #837562;
+  --color-outline-variant: #d6c4ad;
+  --color-primary: #7f5600;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #e6a117;
+  --color-on-primary-container: #5a3c00;
+  --color-secondary: #1c6960;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #a5ede1;
+  --color-on-secondary-container: #226e65;
+  --color-tertiary: #b81f09;
+  --color-on-tertiary: #ffffff;
+  --color-tertiary-container: #ff8f7a;
+  --color-on-tertiary-container: #860d00;
+  --color-ground: #ede8ee;
+  --color-ink: #1a0e1c;
+  --color-saffron: #e6a117;
+  --color-verdigris: #1e6b62;
+  --color-vermilion: #d8371f;
+
+  --font-serif: var(--font-bodoni), 'Bodoni Moda', serif;
+  --font-sans: var(--font-hanken), 'Hanken Grotesk', sans-serif;
+  --font-mono: var(--font-space-mono), 'Space Mono', monospace;
+}
+
 :root {
   --color-surface: #fff7fa;
   --color-surface-dim: #e9d3e8;
